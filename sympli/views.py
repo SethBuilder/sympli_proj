@@ -1,60 +1,51 @@
 from django.shortcuts import render
 from sympli.models import Article, ContentSource
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from time import sleep
+
+def context_generator(request, title, category):
+	"""made this function because views are very similar"""
+	context_dict={}
+	
+	if(category == "index"):
+		articles_list = Article.objects.order_by('-pub_date')
+	else:
+		articles_list = Article.objects.filter(category=category).order_by('-pub_date')
+
+	page = request.GET.get('page', 1)
+	paginator = Paginator(articles_list, 9)
+
+	try:
+		sleep(1)
+		articles = paginator.page(page)
+	except PageNotAnInteger:
+		articles = paginator.page(1)
+	except EmptyPage:
+		articles = paginator.page(paginator.articles_list)
+
+	context_dict['articles'] =  articles
+	context_dict['title'] = title
+
+	return context_dict
+
 
 def index(request):
-	context_dict = {}
-
-	articles = Article.objects.order_by('-pub_date')
-	context_dict['articles'] =  articles
-	context_dict['title'] = "Sympli | أخبارك ببساطه"
-	
-	return render(request, 'sympli/index.html', context_dict)
-
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli | أخبارك ببساطه", "index"))
 
 def worldnews(request):
-	context_dict = {}
-
-	articles = Article.objects.filter(category='world_news').order_by('-pub_date')
-	context_dict['articles'] =  articles
-	context_dict['title'] = "Sympli | أخبار العالم"
-	return render(request, 'sympli/index.html', context_dict)
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli | أخبار العالم", "world_news"))
 
 def science_and_tech(request):
-	context_dict = {}
-
-	articles = Article.objects.filter(category='science_and_tech').order_by('-pub_date')
-	context_dict['articles'] =  articles
-	context_dict['title'] = "Sympli | علوم و تكنولوجيا"
-	return render(request, 'sympli/index.html', context_dict)
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli | علوم و تكنولوجيا", "science_and_tech"))
 
 def health(request):
-	context_dict = {}
-
-	articles = Article.objects.filter(category='health').order_by('-pub_date')
-	context_dict['articles'] =  articles
-	context_dict['title'] = "Sympli | صحه"
-	return render(request, 'sympli/index.html', context_dict)
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli | صحه", "health"))
 
 def trending(request):
-	context_dict = {}
-
-	articles = Article.objects.filter(category='trending').order_by('-pub_date')
-	context_dict['articles'] =  articles
-	context_dict['title'] = "Sympli | ترند"
-	return render(request, 'sympli/index.html', context_dict)
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli | ترند", "trending"))
 
 def travel(request):
-	context_dict = {}
-
-	articles = Article.objects.filter(category='travel').order_by('-pub_date')
-	context_dict['articles'] =  articles
-	context_dict['title'] = "Sympli | سياحه و سفر"
-	return render(request, 'sympli/index.html', context_dict)
+	return render(request, 'sympli/index.html', context_generator(request,"Sympli | سياحه و سفر", "travel"))
 
 def culture(request):
-	context_dict = {}
-
-	articles = Article.objects.filter(category='culture').order_by('-pub_date')
-	context_dict['articles'] =  articles
-	context_dict['title'] = "Sympli |ثقافه و فن"
-	return render(request, 'sympli/index.html', context_dict)
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli |ثقافه و فن", "culture"))

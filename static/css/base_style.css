@@ -19,6 +19,13 @@ a:hover {
     text-decoration: none;
 }
 
+a:focus {
+    
+    text-decoration: none;
+}
+
+
+
 
 a{
 	color: #000;
@@ -93,6 +100,7 @@ hr{
     margin-bottom: 30px;
     border-bottom: 1px solid #ddd;
     height: 400px;
+    position: relative;
 }
 
 .article img{
@@ -146,7 +154,9 @@ hr{
   left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%)
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -webkit-backface-visibility: hidden;
 }
 
 .thumbnail_container:hover .thumbnail_image {
@@ -160,11 +170,12 @@ hr{
 .text {
   background-color: transparent;
   width: 100%;
+  text-align: center;
   
   }
 
-.text ul{
-    text-align: center;
+ul.fas{
+    
 }
 
 .fa-twitter {
@@ -205,7 +216,7 @@ hr{
 .fa:hover{
     opacity: 1;
     transition: 0s;
-    -webkit-transition: .0s;
+    -webkit-transition: 0s;
 }
 
 .middle li{
@@ -213,8 +224,72 @@ hr{
     list-style-type: none;
 }
 
+#header_panel{
+  position: fixed;
+  z-index: 20;
+  background-color: white;
+  width: 100;
+    top: 12%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate3d(-50%,-50%,0);
+}
 
-@media (min-width: @screen-sm-min) { 
+
+#body_panel{
+  margin-top: 150px;
+  
+}
+
+#body_panel .article p, a{
+  direction: rtl;
+}
+
+.loader{
+  
+  height: 100px;
+  width: 100%;
+  text-align: center;
+
+}
+
+/*
+  Set the color of the icon
+*/
+svg path,
+svg rect{
+  fill: #ef4e74;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 750px){
 
 .logo_link{
 	line-height: 1;
@@ -222,4 +297,23 @@ hr{
     font-family: 'Quicksand', sans-serif;
     font-size: 60px;
 }
+
+#header_panel{
+top: 18%;
  }
+
+ #body_panel{
+  margin-top: 220px;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 45;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+}

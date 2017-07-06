@@ -1,3 +1,4 @@
+//to add and remove the active class
 $(document).ready(function () {
     $("ul.nav-list li").click(function () {
         var id = $(this).attr("id");
@@ -18,4 +19,5 @@ $(document).ready(function () {
         $('#' + selectedolditem).addClass("active");
     }
 });
+
 

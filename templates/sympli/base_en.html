@@ -29,10 +29,17 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
+
+
   </head>
   <body>
 
-    <div class="container">
+    <div class="container" id="header_panel">
       <div class="row">
       <div class="col-md-12 col-xs-12 text-center">
       <a href=" {% url 'sympli:index' %} ">
@@ -94,18 +101,53 @@
 
           </ul>
         </div>
+        <hr>
       </div>
 
-    <hr>
     
+    <div id="body_panel">
     {% block body_block %}
 
     {% endblock %}
+    </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/app.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+
+
+
+
+<!--   <script>
+  function yHandler(){
+
+      var wrap = document.getElementById('body_panel');
+      var contentHeight = wrap.offsetHeight;
+      var yOffset = window.pageYOffset; 
+      var y = yOffset + window.innerHeight;
+
+      if(y >= contentHeight){
+        var ourRequest = new XMLHttpRequest();
+        var token = {{endless_scroll_token}};
+
+        if(token == "/home/")
+          {token = '/';}
+        
+        ourRequest.open('GET', token);
+        ourRequest.send();
+
+        ourRequest.onload = function(){
+        var ourData = ourRequest.responseText;
+        wrap.innerHTML += ourData
+
+      };
+    }
+  }
+  window.onscroll = yHandler;
+</script> -->
+
   </body>
 </html>

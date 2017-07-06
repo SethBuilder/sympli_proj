@@ -15,9 +15,9 @@ def pull_xml(rss_link):
 
 def content_sources():
 	rss_links = ['http://feeds.bbci.co.uk/arabic/scienceandtech/rss.xml','http://feeds.bbci.co.uk/arabic/world/rss.xml', 
-	'https://www.alhurra.com/api/z-gvev_qt','https://www.alarabiya.net/.mrss/ar/medicine-and-health.xml',
-	'https://www.alarabiya.net/.mrss/ar/sport.xml', 'http://feeds.bbci.co.uk/arabic/trending/rss.xml', 
-	'https://www.alarabiya.net/.mrss/ar/aswaq/travel-and-tourism.xml', 'https://www.alarabiya.net/.mrss/ar/culture-and-art.xml']
+	'https://www.alhurra.com/api/z-gvev_qt','https://www.alarabiya.net/.mrss/ar/medicine-and-health.xml', 'http://feeds.bbci.co.uk/arabic/trending/rss.xml', 
+	'https://www.alarabiya.net/.mrss/ar/aswaq/travel-and-tourism.xml', 'https://www.alarabiya.net/.mrss/ar/culture-and-art.xml', 
+	'http://www.aljazeera.net/aljazeerarss/9ff80bf7-97cf-47f2-8578-5a9df7842311/497f8f74-88e0-480d-b5d9-5bfae29c9a63',]
 	return rss_links
 
 #GLOBAL VARIABLE
@@ -29,19 +29,22 @@ def populate_content_sources():
 
 	for rss_link in rss_links:
 		feed = pull_xml(rss_link)
+		if rss_link == 'http://www.aljazeera.net/aljazeerarss/9ff80bf7-97cf-47f2-8578-5a9df7842311/497f8f74-88e0-480d-b5d9-5bfae29c9a63':
+			print(feed)
 		content_source = ContentSource.objects.get_or_create(link = rss_link)[0]
+		
 		content_source.title = feed['channel']['title']
 		content_source.description = feed['channel']['description']
 		
 
-		if content_source.link == 'https://www.alarabiya.net/.mrss/ar/sport.xml' or content_source.link == 'https://www.alarabiya.net/.mrss/ar/medicine-and-health.xml' \
-		or content_source.link == 'https://www.alarabiya.net/.mrss/ar/aswaq/travel-and-tourism.xml' \
-		or content_source.link == 'https://www.alarabiya.net/.mrss/ar/culture-and-art.xml':
+		if 'AlArabiya' in content_source.description:
+			content_source.logo_title = feed['channel']['description']
 			content_source.logo_link = 'http://cdn.presstv.com/photo/20160525/568498bd-cd4d-4e82-9cb6-30cfc749f45d.jpg' 
-			content_source.logo_title = feed['channel']['title']
 		else:
-			content_source.logo_link = feed['channel']['image']['url']
-			content_source.logo_title = feed['channel']['image']['title']
+			content_source.logo_title = feed['feed']['title']
+			content_source.logo_link = feed['feed']['image']['href']
+			
+
 
 		content_source.save()
 
@@ -52,354 +55,53 @@ def populate_content_sources():
 #GLOBAL VARIABLE
 content_sources = populate_content_sources()
 
-
-
-
-def populate_articles_bbc_science_and_tech():
-	
-	rss_link = rss_links[0]
-	content_source = content_sources[0]
-	feed = pull_xml(rss_link)
-
-	for entry in feed.entries:
+def populate_articles():
+	categories = ['science_and_tech', 'world_news', 'science_and_tech', 'health', 'trending', 'travel', 'culture', 'world_news',]
+	for i in range(len(rss_links)):
+		rss_link = rss_links[i]
+		content_source = content_sources[i]
+		feed = pull_xml(rss_link)
 		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'science_and_tech'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
-			article.description = entry['summary']['summary_detail']['value']
 
-		article.article_link = entry['link']
-		article.content_source = content_source
+		for entry in feed.entries:
+			article = Article.objects.get_or_create(title=entry['title'])[0]
 
-		if 'source' in entry:
-			print("BBC source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_thumbnail' in entry:
-			print("BBC media")
-			article.thumbnail_link = entry['media_thumbnail'][0]['url']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-
-			if entry['summary_detail']['value']:
-				article.thumbnail_desc = entry['summary_detail']['value']
-			else:
-				article.thumbnail_desc = ['media_thumbnail'][0]['title']
-
-		elif 'summary_detail' in entry:
-			print("BBC thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
-			
-		article.save()
-
-
-
-def populate_articles_bbc_world_news():
-	
-	rss_link = rss_links[1]
-	content_source = content_sources[1]
-	feed = pull_xml(rss_link)
-
-	for entry in feed.entries:
-		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'world_news'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
-			article.description = entry['summary']['summary_detail']['value']
-
-		article.article_link = entry['link']
-		article.content_source = content_source
-
-		if 'source' in entry:
-			print("BBC source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_thumbnail' in entry:
-			print("BBC media")
-			article.thumbnail_link = entry['media_thumbnail'][0]['url']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-
-			if entry['summary_detail']['value']:
-				article.thumbnail_desc = entry['summary_detail']['value']
-			else:
-				article.thumbnail_desc = ['media_thumbnail'][0]['title']
-
-		elif 'summary_detail' in entry:
-			print("BBC thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
-			
-		article.save()
-
-
-
-def populate_articles_alhurra_tech():
-	
-	rss_link = rss_links[2]
-	content_source = content_sources[2]
-	feed = pull_xml(rss_link)
-	
-	for entry in feed.entries:
-		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'science_and_tech'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
-			article.description = entry['summary']['summary_detail']['value']
-
-		article.article_link = entry['link']
-		article.content_source = content_source
-
-		if 'source' in entry:
-			print("hurra source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_thumbnail' in entry:
-			print("hurra media")
-			article.thumbnail_link = entry['media_thumbnail'][0]['url']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-
-			if entry['summary_detail']['value']:
-				article.thumbnail_desc = entry['summary_detail']['value']
-			else:
-				article.thumbnail_desc = ['media_thumbnail'][0]['title']
-
-		elif 'summary_detail' in entry:
-			print("hurra thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
-			# print(str(entry['links']))
-			article.thumbnail_link = entry['links'][1]['href']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-			
-		article.save()
-
-
-
-
-
-
-def populate_articles_arabiya_health():
-	
-	rss_link = rss_links[3]
-	content_source = content_sources[3]
-	feed = pull_xml(rss_link)
-	print(feed.entries)
-	for entry in feed.entries:
-		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'health'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
+			article.category = categories[i]
 			article.description = entry['title']
-
-		article.article_link = entry['link']
-		article.content_source = content_source
-
-		if 'source' in entry:
-			print("arabiya source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_content' in entry:
-			print("arabiya media_content")
-			article.thumbnail_link = entry['media_content'][0]['url']
+			article.article_link = entry['link']
+			article.content_source = content_source
 			pub_date = dateutil.parser.parse(entry['published'])
 			article.pub_date = pub_date
 			article.thumbnail_desc = entry['title']
 
-		elif 'summary_detail' in entry:
-			print("arabiya thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
-			
-		article.save()
+			if 'media_content' in entry:#for arabiya articles
+				article.thumbnail_link = entry['media_content'][0]['url']
+				
+			elif 'media_thumbnail' in entry:#for bbc articles
+				article.thumbnail_link = entry['media_thumbnail'][0]['url']
 
-
-def populate_articles_arabiya_sports():
-	
-	rss_link = rss_links[4]
-	content_source = content_sources[4]
-	feed = pull_xml(rss_link)
-	print(feed.entries)
-	for entry in feed.entries:
-		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'sports'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
-			article.description = entry['title']
-
-		article.article_link = entry['link']
-		article.content_source = content_source
-
-		if 'source' in entry:
-			print("arabiya source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_content' in entry:
-			print("arabiya media_content")
-			article.thumbnail_link = entry['media_content'][0]['url']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-			article.thumbnail_desc = entry['title']
-
-		elif 'summary_detail' in entry:
-			print("arabiya thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
-			
-		article.save()
-
-
-
-def populate_articles_bbc_trending():
-	
-	rss_link = rss_links[5]
-	content_source = content_sources[5]
-	feed = pull_xml(rss_link)
-
-	for entry in feed.entries:
-		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'trending'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
-			article.description = entry['summary']['summary_detail']['value']
-
-		article.article_link = entry['link']
-		article.content_source = content_source
-
-		if 'source' in entry:
-			print("BBC source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_thumbnail' in entry:
-			print("BBC media")
-			article.thumbnail_link = entry['media_thumbnail'][0]['url']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-
-			if entry['summary_detail']['value']:
-				article.thumbnail_desc = entry['summary_detail']['value']
+			elif "links" in entry:#for hurra articles
+				try:
+					article.thumbnail_link = entry['links'][1]['href']
+				except IndexError:
+					continue
+				
 			else:
-				article.thumbnail_desc = ['media_thumbnail'][0]['title']
+				print("XXXXXXXXXXXXXXXXXXXXXXXXXXXX" + str(entry))
+				continue
 
-		elif 'summary_detail' in entry:
-			print("BBC thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
+			article.save()
 			
-		article.save()
 
+def delete_bad_articles():# articles that don't have links and other important details
+	bad_articles = Article.objects.filter(article_link='')
+	for bad_article in bad_articles:
+		bad_article.delete()
+		print("deleted a baddie")
 
-def populate_articles_arabiya_travel():
-	
-	rss_link = rss_links[6]
-	content_source = content_sources[6]
-	feed = pull_xml(rss_link)
-	print(feed.entries)
-	for entry in feed.entries:
-		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'travel'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
-			article.description = entry['title']
-
-		article.article_link = entry['link']
-		article.content_source = content_source
-
-		if 'source' in entry:
-			print("arabiya travel source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_content' in entry:
-			print("arabiya travel media_content")
-			article.thumbnail_link = entry['media_content'][0]['url']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-			article.thumbnail_desc = entry['title']
-
-		elif 'summary_detail' in entry:
-			print("arabiya travel thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
-			
-		article.save()
-
-def populate_articles_arabiya_culture():
-	
-	rss_link = rss_links[7]
-	content_source = content_sources[7]
-	feed = pull_xml(rss_link)
-	print(feed.entries)
-	for entry in feed.entries:
-		
-		article = Article.objects.get_or_create(title=entry['title'])[0]
-		article.category = 'culture'
-		# print(str(article.title))
-		if entry['description']:
-			article.description = entry['description']
-		else:
-			article.description = entry['title']
-
-		article.article_link = entry['link']
-		article.content_source = content_source
-
-		if 'source' in entry:
-			print("arabiya culture source")
-			article.thumbnail_link = entry['source']['href']
-			article.thumbnail_desc = entry['source']['title']
-			
-		elif 'media_content' in entry:
-			print("arabiya culture media_content")
-			article.thumbnail_link = entry['media_content'][0]['url']
-			pub_date = dateutil.parser.parse(entry['published'])
-			article.pub_date = pub_date
-			article.thumbnail_desc = entry['title']
-
-		elif 'summary_detail' in entry:
-			print("arabiya culture thumbnail")
-			# article.thumbnail_link = entry['thumbnail']
-			article.thumbnail_desc = entry['summary_detail']['value']
-			
-		article.save()
 
 if __name__ == '__main__':
 	print('starting population_script.py')
-	# populate_articles_bbc_science_and_tech()
-	# populate_articles_alhurra_tech()
-	# populate_articles_bbc_world_news()
-	# populate_articles_arabiya_health()
-	# populate_articles_bbc_trending()
-	# populate_articles_arabiya_travel()
-	populate_articles_arabiya_culture()
-	# populate_articles_arabiya_sports()
+	# populate_articles()
+	delete_bad_articles()
 	
