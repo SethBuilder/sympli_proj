@@ -16,7 +16,7 @@ def context_generator(request, title, category):
 	paginator = Paginator(articles_list, 9)
 
 	try:
-		sleep(1)
+		sleep(5)
 		articles = paginator.page(page)
 	except PageNotAnInteger:
 		articles = paginator.page(1)
