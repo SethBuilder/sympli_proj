@@ -102,6 +102,6 @@ def delete_bad_articles():# articles that don't have links and other important d
 
 if __name__ == '__main__':
 	print('starting population_script.py')
-	# populate_articles()
+	populate_articles()
 	delete_bad_articles()
 	
