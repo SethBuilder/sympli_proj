@@ -13,10 +13,10 @@ def context_generator(request, title, category):
 		articles_list = Article.objects.filter(category=category).order_by('-pub_date')
 
 	page = request.GET.get('page', 1)
-	paginator = Paginator(articles_list, 9)
+	paginator = Paginator(articles_list, 18)
 
 	try:
-		sleep(1)
+		sleep(0)
 		articles = paginator.page(page)
 	except PageNotAnInteger:
 		articles = paginator.page(1)
@@ -30,7 +30,7 @@ def context_generator(request, title, category):
 
 
 def index(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli | أخبارك ببساطه", "index"))
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli | أخباري ببساطه", "index"))
 
 def worldnews(request):
 	return render(request, 'sympli/index.html', context_generator(request, "Sympli | أخبار العالم", "world_news"))
@@ -49,3 +49,11 @@ def travel(request):
 
 def culture(request):
 	return render(request, 'sympli/index.html', context_generator(request, "Sympli |ثقافه و فن", "culture"))
+
+def show_article(request, article_id):
+	context_dict={}
+	article = Article.objects.get(pk = article_id)
+	# get_object_or_404(MyModel, pk=1)
+	print('AAAAAAAAArticle' + str(article.id))
+	context_dict['article'] =  article
+	return render(request, 'sympli/article.html', {'article': article})

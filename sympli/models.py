@@ -9,6 +9,7 @@ from django.template.defaultfilters import slugify
 import requests
 from time import sleep
 from langdetect import detect
+from urllib.parse import urlsplit, urlunsplit
 
 def slugify_arabic(str):
 		str = str.replace(" ", "-")
@@ -100,8 +101,12 @@ class Article(models.Model):
 	category = models.CharField(blank=True, max_length=100)
 	# likes = models.ManyToManyField(Like, default=0)
 
-	#Override save to save logo image
+	#Override save to save logo image and convert http to https
 	def save(self, *args, **kwargs):
+		self.article_link = urlsplit(self.article_link)
+		self.article_link = self.article_link._replace(scheme='https')
+		self.article_link = urlunsplit(self.article_link)
+		
 		if not self.thumbnail_image and self.thumbnail_link:
 			# pdb.set_trace()
 			if str(detect(self.thumbnail_desc)) == 'ar':

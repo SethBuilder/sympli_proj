@@ -29,7 +29,7 @@ SECRET_KEY = 'j%dl@hp3bagit#ssaef4shi!e1)v5u(h@sf5&4#%^52_+#om$f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sympli.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['sympli.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition

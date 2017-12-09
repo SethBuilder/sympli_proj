@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-<html lang="en">
+<html amp lang="ar">
   <head>
     <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    
+    {% block canonical_block %}
+
+    {% endblock %}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
     <title>
       {% block title_block %}
-        Sympli | Personalised Arabic and English News 
+        Sympli | أخباري ببساطه 
       {% endblock %}
     </title>
 
     <!-- Bootstrap -->
-    <link href="{%static 'css/bootstrap.min.css'%}" rel="stylesheet">
-    <link href="{%static 'css/base_style.css'%}" rel="stylesheet">
+    <!-- <link href="{%static 'css/bootstrap.min.css'%}" rel="stylesheet"> -->
+    <!-- <link href="{%static 'css/base_style.css'%}" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:700" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
 
     <meta name="description" content="Sympli.me is personalised news  platform for the middle east market">
     <meta name="keywords" content="news, mena, emea, personalised news, arab, arabic, english, arabic news">
@@ -31,37 +35,415 @@
     <![endif]-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'js/infinite.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script> -->
+    {% block jsonld_block %}
+    {% endblock %}
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
+    <style amp-custom>
+      @font-face {
+    font-family: DubaiFont;
+    src: url(/static/fonts/dubai/Dubai-Light.ttf);
+}
+
+body{
+  font-family: DubaiFont;
+  background: #fff;
+  color: #000;
+}
+
+::selection {
+    color: white; 
+    background: #63b8ff;
+}
+
+a:hover {
+    color: #ef4e74;
+    text-decoration: none;
+}
+
+a:focus {
+    
+    text-decoration: none;
+}
+
+
+
+
+a{
+  color: #000;
+    border-bottom: none;
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    /*padding: .25rem .375rem .625rem;*/
+    text-decoration: none;
+}
+
+.active a{
+  color: #ef4e74;
+}
+
+.active{
+    border-bottom: 3px solid #ef4e74;
+    padding: 6px;
+}
+
+
+.logo_link{
+  line-height: 1;
+  display: inline;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 100px;
+}
+
+#logo_sympli{
+  color: #63b8ff;
+  opacity: .8;
+  margin:0px;
+  padding: 0px;
+}
+#logo_me{
+  color: #ef4e74;
+  margin:0px;
+  padding: 0px;
+}
+
+ ul.nav-list{
+  margin: 0;
+  
+  text-align: center;
+}
+
+ ul.nav-list li{
+  text-decoration: none;
+  list-style-type: none;
+  display: inline;
+  font-size: 20px;
+  /*padding-left: 20px;*/
+  /*padding-right: 20px;*/
+}
+
+ ul.nav-list li a{
+  display: inline-block;
+  padding: 10px;
+}
+
+hr{
+  margin-top: 0px;
+  display: block;
+    height: .8px;
+    border: 0;
+    border-top: 1px solid #ddd;
+    /*margin: 1em 0;*/
+    padding: 0; 
+}
+
+.article{
+  padding:20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    height: 400px;
+    position: relative;
+}
+
+.article amp-img{
+    margin-bottom: 10px;
+}
+
+
+
+.article h3{
+  direction: rtl;
+}
+
+.article p.pub_date {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #999;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.article h3.title {
+    /*font-family: "Fakt",AvenirNext-Medium,"Segoe UI",sans-serif;*/
+    font-weight: 800;
+    color: #000;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.thumbnail_container {
+    position: relative;
+    width: 100%;
+}
+
+.article .thumbnail_image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -webkit-backface-visibility: hidden;
+}
+
+/*.thumbnail_container:hover .thumbnail_image {
+  opacity: 0.6;
+}*/
+
+/*.thumbnail_container:hover .middle {
+  opacity: 1;
+}*/
+
+.text {
+  background-color: transparent;
+  width: 100%;
+  text-align: center;
+  
+  }
+
+ul.fas{
+    
+}
+
+.fa-twitter {
+    color: #4099FF;
+
+}
+
+.fa-facebook {
+    color: #3B5998;
+}
+
+.fa-instagram {
+    opacity: 0.7;
+    color: #ff0084;
+}
+
+.fa-youtube-play {
+    color: #e52d27;
+}
+
+.fa-rss {
+    color: #FF6600;
+}
+
+
+.fa-linkedin-square {
+    color: #3B5998;
+}
+
+
+.fa {
+    opacity: 0.7;
+    transition: 0s;
+    -webkit-transition: 0s;
+    
+}
+
+.fa:hover{
+    opacity: 1;
+    transition: 0s;
+    -webkit-transition: 0s;
+}
+
+.middle li{
+    float: left;
+    list-style-type: none;
+}
+
+#header_panel{
+  /*position: fixed;
+  z-index: 20;
+  background-color: white;
+  width: 100;*/
+    top: 12%;
+ /* left: 50%;
+  width: 100%;*/
+  /*transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate3d(-50%,-50%,0);*/
+}
+
+
+#body_panel{
+  /*margin-top: 180px;*/
+  
+}
+
+#body_panel .article p, a{
+  direction: rtl;
+}
+
+.loader{
+  
+  height: 100px;
+  width: 100%;
+  text-align: center;
+
+}
+
+/*
+  Set the color of the icon
+*/
+svg path,
+svg rect{
+  fill: #ef4e74;
+  
+}
+
+
+.infinite-container  {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+.art_logo {
+  float: left; margin-right:10px;
+}
+
+/*.art_img {
+  width: 373px;height: 214px;
+}*/
+
+a.infinite-more-link {
+  display: inline-block;
+  
+}
+
+.container-center {
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) { 
+/*#body_panel{
+  margin-top: 250px;
+  
+}*/
+
+ }
+
+
+
+@media only screen and (max-width: 750px){
+
+.infinite-container  {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.logo_link{
+  line-height: 1;
+  display: inline;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 60px;
+}
+
+#header_panel{
+top: 18%;
+ }
+
+ #body_panel{
+  /*margin-top: 220px;*/
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 45;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+}
+
+    </style>
 
   </head>
   <body>
 
     <div class="container" id="header_panel">
       <div class="row">
-      <div class="col-md-12 col-xs-12 text-center">
-      <a href=" {% url 'sympli:index' %} ">
-        <h1 class="logo_link" id="logo_sympli">SYMPLI</h1>
-        <h1 class="logo_link" id="logo_me">
-          .ME
+      <div class="text-center">
+      <a href=" {% url 'sympli:index' %} " title="Sympli | أخباري ببساطه">
+        <h1>
+          <span class="logo_link" id="logo_sympli">أخباري</span>
+          <span class="logo_link" id="logo_me">ببساطه</span>
         </h1>
+        <!-- <h1 class="logo_link" id="logo_me">
+          .ببساطه
+        </h1> -->
+        <!-- <h3 class="">أخبارك ببساطه</h3> -->
         </a>
       </div>
       </div>
 
-      <!-- <div class="row">
-      <div class="col-md-8 col-xs-12 text-center">
+      
+      
 
-        <h3 class="">أخبارك ببساطه</h3>
         
-      </div>
-      </div> -->
+        
+      
+      
 
       <div class="row">
         
-          <ul class="nav-list col-md-12 col-xs-12">
+          <ul class="nav-list">
 
             <!-- <li id="register">
               <a href="#">سجّل</a>
@@ -113,8 +495,8 @@
 
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'js/app.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
 
 
 

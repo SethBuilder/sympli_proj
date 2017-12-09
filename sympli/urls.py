@@ -13,4 +13,5 @@ urlpatterns=[
 	url(r'^trending/$', views.trending, name='trending'),
 	url(r'^travel/$', views.travel, name='travel'),
 	url(r'^culture/$', views.culture, name='culture'),
+	url(r'^article/(?P<article_id>[\w\-]+)/', views.show_article, name="show_article"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
