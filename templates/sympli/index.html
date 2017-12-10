@@ -50,9 +50,9 @@
 	  	<p>من {{article.content_source.title}}</p>
 	  	
 	  	<div class="thumbnail_container">
-        <!--This is because alarabya does not allow to pu their content in iframe-->
+        <!--This is because alarabya and others does not allow to pu their content in iframe-->
         {% if article.content_source.id == 9 or article.content_source.id == 5 or article.content_source.id == 7 or article.content_source.id == 1 or article.content_source.id == 8  %}
-        <a target="_blank" href="{{article.article_link}} " title="{{article.title}}">
+        <a target="_blank" href="{{article.article_link}} " title="{{article.title}} - سوف يفتح المقال في مبوبه جديده">
           {% else %}
 
 	  	  <a title="{{article.title}}" href="{% url 'sympli:show_article' article.id %} ">
@@ -83,9 +83,9 @@
 	  	<div class="pub_date" class="title" >
 	  		<p class="pub_date"> {{article.pub_date}} </p>
         <!-- To avoid putting alarabiya in iFrame as they don't allow it -->
-        {% if article.content_source.id == 4 or article.content_source.id == 6 or article.content_source.id == 7 %}
-        <a title="{{article.title}}" href="{{article.article_link}}" target="_blank"> 
-          {{article.title}} 
+        {% if article.content_source.id == 9 or article.content_source.id == 5 or article.content_source.id == 7 or article.content_source.id == 1 or article.content_source.id == 8 %}
+        <a title="{{article.title}} - سوف يفتح المقال في مبوبه جديده" href="{{article.article_link}}" target="_blank"> 
+          {{article.title}}<amp-img src=" {% static 'images/new.svg' %} " alt="This article will open in new tab" width="15" height="15"  layout="fixed" class="new"></amp-img>
         </a>
 	  		
 

@@ -18,10 +18,12 @@ def content_sources():
 	'https://www.alhurra.com/api/z-gvev_qt','https://www.alarabiya.net/.mrss/ar/medicine-and-health.xml', 'http://feeds.bbci.co.uk/arabic/trending/rss.xml', 
 	'https://www.alarabiya.net/.mrss/ar/aswaq/travel-and-tourism.xml', 'https://www.alarabiya.net/.mrss/ar/culture-and-art.xml', 
 	'http://www.aljazeera.net/aljazeerarss/9ff80bf7-97cf-47f2-8578-5a9df7842311/497f8f74-88e0-480d-b5d9-5bfae29c9a63','https://www.radiosawa.com/api/zr-veuyqv',
-	'https://www.radiosawa.com/api/zriqyeugqy', 'https://www.radiosawa.com/api/zqjqmek_o_',
-	'https://www.radiosawa.com/api/zoyqregroq', 'https://www.radiosawa.com/api/z$jyetyqy', 
-	'https://www.radiosawa.com/api/ztooieigop', 'https://www.alhurra.com/api/zu-tepvqt', 
-	'https://www.alhurra.com/api/zv$qteotot', 'https://www.alhurra.com/api/ztyqyeiqot', 'https://www.alhurra.com/api/zgyqqe_qoo']
+	'https://www.radiosawa.com/api/zriqyeugqy','https://www.radiosawa.com/api/zqjqmek_o_',
+	'https://www.radiosawa.com/api/zoyqregroq','https://www.radiosawa.com/api/z$jyetyqy', 
+	'https://www.radiosawa.com/api/ztooieigop','https://www.alhurra.com/api/zu-tepvqt', 
+	'https://www.alhurra.com/api/zv$qteotot','https://www.alhurra.com/api/ztyqyeiqot', 
+	'https://www.alhurra.com/api/zgyqqe_qoo',
+	]
 	return rss_links
 
 #GLOBAL VARIABLE
