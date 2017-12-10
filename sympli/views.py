@@ -50,6 +50,12 @@ def travel(request):
 def culture(request):
 	return render(request, 'sympli/index.html', context_generator(request, "Sympli |ثقافه و فن", "culture"))
 
+def sport(request):
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli |رياضه", "sport"))
+
+def variety(request):
+	return render(request, 'sympli/index.html', context_generator(request, "Sympli |منوعات", "variety"))
+
 def show_article(request, article_id):
 	context_dict={}
 	article = Article.objects.get(pk = article_id)

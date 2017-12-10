@@ -17,7 +17,11 @@ def content_sources():
 	rss_links = ['https://arabic.cnn.com/rss','http://feeds.bbci.co.uk/arabic/scienceandtech/rss.xml','http://feeds.bbci.co.uk/arabic/world/rss.xml', 
 	'https://www.alhurra.com/api/z-gvev_qt','https://www.alarabiya.net/.mrss/ar/medicine-and-health.xml', 'http://feeds.bbci.co.uk/arabic/trending/rss.xml', 
 	'https://www.alarabiya.net/.mrss/ar/aswaq/travel-and-tourism.xml', 'https://www.alarabiya.net/.mrss/ar/culture-and-art.xml', 
-	'http://www.aljazeera.net/aljazeerarss/9ff80bf7-97cf-47f2-8578-5a9df7842311/497f8f74-88e0-480d-b5d9-5bfae29c9a63',]
+	'http://www.aljazeera.net/aljazeerarss/9ff80bf7-97cf-47f2-8578-5a9df7842311/497f8f74-88e0-480d-b5d9-5bfae29c9a63','https://www.radiosawa.com/api/zr-veuyqv',
+	'https://www.radiosawa.com/api/zriqyeugqy', 'https://www.radiosawa.com/api/zqjqmek_o_',
+	'https://www.radiosawa.com/api/zoyqregroq', 'https://www.radiosawa.com/api/z$jyetyqy', 
+	'https://www.radiosawa.com/api/ztooieigop', 'https://www.alhurra.com/api/zu-tepvqt', 
+	'https://www.alhurra.com/api/zv$qteotot', 'https://www.alhurra.com/api/ztyqyeiqot', 'https://www.alhurra.com/api/zgyqqe_qoo']
 	return rss_links
 
 #GLOBAL VARIABLE
@@ -46,9 +50,12 @@ def populate_content_sources():
 		elif "BBC" in content_source.description:
 			content_source.logo_title = feed['channel']['description']
 			content_source.logo_link = 'https://www.broadbandtvnews.com/wp-content/uploads/2017/10/BBC-arabic.png'
-		elif "Alhurra" in content_source.description:
+		# elif "Alhurra" in content_source.description:
+		# 	content_source.logo_title = feed['channel']['description']
+		# 	content_source.logo_link = 'https://thesinosaudiblog.files.wordpress.com/2009/12/al-hurra.jpg'
+		elif "راديو سوا" in content_source.description:
 			content_source.logo_title = feed['channel']['description']
-			content_source.logo_link = 'https://www.alhurra.com/Content/responsive/MBN/ar-ALH/img/logo-print.gif'
+			content_source.logo_image = "logo_images/sawa.png"
 			
 		else:
 			content_source.logo_title = feed['feed']['title']
@@ -66,7 +73,10 @@ def populate_content_sources():
 content_sources = populate_content_sources()
 
 def populate_articles():
-	categories = ['world_news','science_and_tech', 'world_news', 'science_and_tech', 'health', 'trending', 'travel', 'culture', 'world_news',]
+	categories = ['world_news','science_and_tech', 'world_news', 
+	'science_and_tech', 'health', 'trending', 'travel', 'culture', 
+	'world_news','science_and_tech', 'world_news','world_news', 'world_news', 
+	'sport', 'variety', 'world_news', 'world_news', 'world_news' , 'world_news']
 	for i in range(len(rss_links)):
 		rss_link = rss_links[i]
 		content_source = content_sources[i]
