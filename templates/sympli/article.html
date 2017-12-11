@@ -40,12 +40,20 @@
   <script type="application/ld+json">
 {
   "@context": "http://schema.org",
-  "@type": "NewsArticle",
+  "@type": "ReportageNewsArticle",
+  "url": "{{article.article_link}}",
   "headline": "{{article.title}}",
   "alternativeHeadline": "{{article.title}}",
-  "image": "http://sympli.pythonanywhere.com{{article.thumbnail_image.url}}",
+  "thumbnailUrl": "http://sympli.pythonanywhere.com{{article.thumbnail_image.url}}",
+  "image":{
+    "@type":"ImageObject",
+    "width":"373",
+    "height":"214",
+    "url":"http://sympli.pythonanywhere.com{{article.thumbnail_image.url}}"
+  },
+
   "publisher": {
-    "@type": "Organization",
+    "@type": "NewsMediaOrganization",
     "@id" : "{{article.content_source.link}}",
     "logo": {
             "@type": "ImageObject",
@@ -58,7 +66,7 @@
   },
 
   "author": {
-            "@type": "Organization",
+            "@type": "NewsMediaOrganization",
             "name": "{{article.content_source.title}}"
         },
   "datePublished": "{{article.pub_date}}",
