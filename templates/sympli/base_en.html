@@ -34,6 +34,64 @@
     <link rel="mask-icon" href="/media/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
 
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  
+   "@type": "Organization",
+ "name": "أخباري ببساطه",
+ "legalName" : "Sympli & Co",
+ "url": "/",
+ "logo": "http://sympli.pythonanywhere.com/media/favicon/org.png",
+ "foundingDate": "2017",
+ "founders": [
+ {
+ "@type": "Person",
+ "name": "Seif Elmughrabi"
+ },
+ {
+ "@type": "Person",
+ "name": "Ali Mughrabi"
+ } ],
+ "address": {
+ "@type": "PostalAddress",
+ "streetAddress": "King Hussein Business Park",
+ "addressLocality": "Dabouq",
+ "addressRegion": "Amman",
+ "postalCode": "11821",
+ "addressCountry": "Jordan"
+ },
+ "contactPoint": {
+ "@type": "ContactPoint",
+ "contactType": "customer support",
+ "telephone": "[+778673173]",
+ "email": "moghrabi@gmail.com"
+ },
+ "sameAs": [ 
+ "http://www.twitter.com/sympli_me",
+ "http://www.linkedin.com/company/sympli_me",
+ ]}
+
+
+
+
+
+
+
+
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "http://sympli.pythonanywhere.com/",
+      "name": "الصفحه الاولى",
+      "image": "http://sympli.pythonanywhere.com/media/favicon/org.png"
+    }
+  },
+}
+</script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -357,6 +415,38 @@ a.infinite-more-link {
   text-align: center;
 }
 
+/* Style the list */
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    text-align: right;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
+
 
 
 
@@ -508,8 +598,8 @@ and (orientation : portrait) {
               <a title="علوم و تكنولوجيا" href=" {% url 'sympli:science_and_tech' %} ">علوم و تكنولوجيا</a>
             </li>
 
-            <li id="worldnews">
-              <a title="أخبار العالم" href=" {% url 'sympli:worldnews' %} ">أخبار العالم</a>
+            <li id="world_news">
+              <a title="أخبار العالم" href=" {% url 'sympli:world_news' %} ">أخبار العالم</a>
             </li>
 
             <li id="index">
@@ -523,7 +613,10 @@ and (orientation : portrait) {
 
     
     <div id="body_panel">
+      
     {% block body_block %}
+
+
 
     {% endblock %}
     </div>

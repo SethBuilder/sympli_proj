@@ -7,7 +7,7 @@ def context_generator(request, title, category):
 	"""made this function because views are very similar"""
 	context_dict={}
 	
-	if(category == "index"):
+	if(category == "الصفحه_الرئيسيه"):
 		articles_list = Article.objects.order_by('-pub_date')
 	else:
 		articles_list = Article.objects.filter(category=category).order_by('-pub_date')
@@ -30,36 +30,35 @@ def context_generator(request, title, category):
 
 
 def index(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli | أخباري ببساطه", "index"))
+	return render(request, 'sympli/index.html', context_generator(request, "أخباري ببساطه", "الصفحه_الرئيسيه"))
 
 def worldnews(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli | أخبار العالم", "world_news"))
+	return render(request, 'sympli/index.html', context_generator(request, "أخبار العالم", "أخبار_العالم"))
 
 def science_and_tech(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli | علوم و تكنولوجيا", "science_and_tech"))
+	return render(request, 'sympli/index.html', context_generator(request, "علوم و تكنولوجيا", "علوم_و_تكنولوجيا"))
 
 def health(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli | صحه", "health"))
+	return render(request, 'sympli/index.html', context_generator(request, "صحه", "صحه"))
 
 def trending(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli | ترند", "trending"))
+	return render(request, 'sympli/index.html', context_generator(request, "ترند", "ترند"))
 
 def travel(request):
-	return render(request, 'sympli/index.html', context_generator(request,"Sympli | سياحه و سفر", "travel"))
+	return render(request, 'sympli/index.html', context_generator(request,"سياحه و سفر", "سياحه_و_سفر"))
 
 def culture(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli |ثقافه و فن", "culture"))
+	return render(request, 'sympli/index.html', context_generator(request, "ثقافه و فن", "ثقافه_و_فن"))
 
 def sport(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli |رياضه", "sport"))
+	return render(request, 'sympli/index.html', context_generator(request, "رياضه", "رياضه"))
 
 def variety(request):
-	return render(request, 'sympli/index.html', context_generator(request, "Sympli |منوعات", "variety"))
+	return render(request, 'sympli/index.html', context_generator(request, "منوعات", "منوعات"))
 
-def show_article(request, article_id):
+def show_article(request, category, article_id):
 	context_dict={}
 	article = Article.objects.get(pk = article_id)
-	# get_object_or_404(MyModel, pk=1)
-	print('AAAAAAAAArticle' + str(article.id))
 	context_dict['article'] =  article
-	return render(request, 'sympli/article.html', {'article': article})
+	context_dict['category'] =  category
+	return render(request, 'sympli/article.html', context_dict)

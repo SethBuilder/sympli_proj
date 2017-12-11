@@ -28,6 +28,19 @@
 {% endblock %}
 
 {% block body_block %}
+<div class="row">
+      <ul class="breadcrumb nav-list">
+        {% if title == "أخباري ببساطه"%}
+         <li></li>
+
+        {% else %}
+        <li> {{title}} </li>
+
+        {% endif %}
+        <!-- <li><a href="/{{article.category}}">{{article.content_source.title}}</a></li> -->
+        <li><a href="/">الصفحه الاولى</a></li>
+      </ul>
+      </div>
  <div class="container infinite-container">
   {% for article in articles %}
 
@@ -55,7 +68,7 @@
         <a target="_blank" href="{{article.article_link}} " title="{{article.title}} - سوف يفتح المقال في مبوبه جديده">
           {% else %}
 
-	  	  <a title="{{article.title}}" href="{% url 'sympli:show_article' article.id %} ">
+	  	  <a title="{{article.title}}" href="{% url 'sympli:show_article' article.category article.id %} ">
 
           {% endif %}
         <amp-img src=" {{article.thumbnail_image.url}} " alt="Article Thumbnail" class="art_img thumbnail_image" width="373" height="214"  layout="responsive"></amp-img>
@@ -90,7 +103,7 @@
 	  		
 
         {% else %}
-        <a href=" {% url 'sympli:show_article' article.id %} "> {{article.title}} 
+        <a href=" {% url 'sympli:show_article' article.category article.id %} "> {{article.title}} 
         </a>
         
           {% endif %}

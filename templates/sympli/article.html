@@ -48,12 +48,39 @@
   ],
   "datePublished": "{{article.pub_date}}",
   "description": "تقرير عن {{article.title}} ",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "http://sympli.pythonanywhere.com/",
+      "name": "الصفحه الاولى",
+      "image": "http://sympli.pythonanywhere.com/media/favicon/org.png"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "/{{article.category}}",
+      "name": "{{article.title}}",
+      "image": "http://sympli.pythonanywhere.com/media/favicon/org.png"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "item": {
+      "@id": "{{article.article_link}}",
+      "name": "{{article.title}}",
+      "image": "{{article.thumbnail_image.url}}"
+    }
+  }]
 }
 </script>
 
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
     <style amp-custom>
+
       @font-face {
     font-family: DubaiFont;
     src: url(/static/fonts/dubai/Dubai-Light.ttf);
@@ -359,6 +386,13 @@ svg rect{
 
 
 
+
+
+
+
+
+
+
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
@@ -407,6 +441,55 @@ top: 18%;
 }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* Style the list */
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    text-align: right;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
+
+
     </style>
 
   </head>
@@ -436,6 +519,7 @@ top: 18%;
       </div>
       </div> -->
 
+
       <div class="row">
         
           <ul class="nav-list">
@@ -452,12 +536,20 @@ top: 18%;
               <a title="ترند" href="{% url 'sympli:trending' %}">ترند</a>
             </li>
 
+            <li id="variety">
+              <a title="منوعات" href="{% url 'sympli:variety' %}">منوعات</a>
+            </li>
+
             <li id="culture">
               <a title="ثقافه و فن" href="{% url 'sympli:culture' %}">ثقافه و فن</a>
             </li>
 
             <li id="travel">
               <a title="سياحه و سفر" href="{% url 'sympli:travel' %}">سياحه و سفر</a>
+            </li>
+
+            <li id="sport">
+              <a title="رياضه" href="{% url 'sympli:sport' %}">رياضه</a>
             </li>
 
             <li id="health">
@@ -469,7 +561,7 @@ top: 18%;
             </li>
 
             <li id="worldnews">
-              <a title="أخبار العالم" href=" {% url 'sympli:worldnews' %} ">أخبار العالم</a>
+              <a title="أخبار العالم" href=" {% url 'sympli:world_news' %} ">أخبار العالم</a>
             </li>
 
             <li id="index">
@@ -483,6 +575,15 @@ top: 18%;
 
     
     <div id="body_panel">
+      <div class="row">
+      <ul class="breadcrumb nav-list">
+         <li>{{article.title}}</li>
+        <li>(<a href="/{{article.category}}">{{article.content_source.title}}</a>) <a href="/{{category}}">{{category}}</a></li>
+        <li><a href="/">الصفحه الاولى</a></li>
+       
+      </ul>
+
+</div>
     <h1> {{article.title}} </h1>
 
   <amp-iframe width="1500" height="2200"

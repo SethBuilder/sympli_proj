@@ -75,10 +75,10 @@ def populate_content_sources():
 content_sources = populate_content_sources()
 
 def populate_articles():
-	categories = ['world_news','science_and_tech', 'world_news', 
-	'science_and_tech', 'health', 'trending', 'travel', 'culture', 
-	'world_news','science_and_tech', 'world_news','world_news', 'world_news', 
-	'sport', 'variety', 'world_news', 'world_news', 'world_news' , 'world_news']
+	categories = ['أخبار_العالم','علوم_و_تكنولوجيا', 'أخبار_العالم', 
+	'علوم_و_تكنولوجيا', 'صحه', 'ترند', 'سياحه_و_سفر', 'ثقافه_و_فن', 
+	'أخبار_العالم','علوم_و_تكنولوجيا', 'أخبار_العالم','أخبار_العالم', 'أخبار_العالم', 
+	'رياضه', 'منوعات', 'أخبار_العالم', 'أخبار_العالم', 'أخبار_العالم' , 'أخبار_العالم']
 	for i in range(len(rss_links)):
 		rss_link = rss_links[i]
 		content_source = content_sources[i]
