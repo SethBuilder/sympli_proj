@@ -43,10 +43,31 @@
   "@type": "NewsArticle",
   "headline": "{{article.title}}",
   "alternativeHeadline": "{{article.title}}",
-  "image": "{{article.thumbnail_image.url}}",
-  "datePublished": "{{article.pub_date}}",
-  "description": "تقرير عن {{article.title}} "
+  "image": "http://sympli.pythonanywhere.com{{article.thumbnail_image.url}}",
+  "publisher": {
+    "@type": "Organization",
+    "@id" : "{{article.content_source.link}}",
+    "logo": {
+            "@type": "ImageObject",
+            "name": "{{article.content_source.description}}",
+            "width": "115",
+            "height": "70",
+            "url": "{{article.content_source.logo_link}}"
+        },
+    "name" : "{{article.content_source.logo_title}}"
+  },
 
+  "author": {
+            "@type": "Organization",
+            "name": "{{article.content_source.title}}"
+        },
+  "datePublished": "{{article.pub_date}}",
+  "dateModified": "{{article.pub_date}}",
+  "description": "تقرير عن {{article.title}} ",
+  "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "http://sympli.pythonanywhere.com{% url 'sympli:show_article' article.category article.id %}"
+      }
 }
 
 </script>
@@ -72,7 +93,7 @@
     "@type": "ListItem",
     "position": 3,
     "item": {
-      "@id": "{{article.article_link}}",
+      "@id": "http://sympli.pythonanywhere.com{% url 'sympli:show_article' article.category article.id %}",
       "name": "{{article.title}}",
       "image": "{{article.thumbnail_image.url}}"
     }
