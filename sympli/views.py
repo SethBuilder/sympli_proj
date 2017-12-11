@@ -25,6 +25,7 @@ def context_generator(request, title, category):
 
 	context_dict['articles'] =  articles
 	context_dict['title'] = title
+	context_dict['category'] = category
 
 	return context_dict
 
