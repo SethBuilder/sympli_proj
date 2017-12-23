@@ -8,6 +8,7 @@ django.setup()
 import feedparser
 from sympli.models import ContentSource, Article
 import dateutil.parser
+from datetime import date, datetime
 
 def pull_xml(rss_link):
 	news_feed = feedparser.parse(rss_link)
@@ -22,7 +23,8 @@ def content_sources():
 	'https://www.radiosawa.com/api/zoyqregroq','https://www.radiosawa.com/api/z$jyetyqy', 
 	'https://www.radiosawa.com/api/ztooieigop','https://www.alhurra.com/api/zu-tepvqt', 
 	'https://www.alhurra.com/api/zv$qteotot','https://www.alhurra.com/api/ztyqyeiqot', 
-	'https://www.alhurra.com/api/zgyqqe_qoo',
+	'https://www.alhurra.com/api/zgyqqe_qoo','https://www.swissinfo.ch/service/ara/rssxml/sci-tech/rss',
+	'https://www.swissinfo.ch/service/ara/rssxml/culture/rss', 'https://www.swissinfo.ch/service/ara/rssxml/business/rss',
 	]
 	return rss_links
 
@@ -35,6 +37,7 @@ def populate_content_sources():
 
 	for rss_link in rss_links:
 		feed = pull_xml(rss_link)
+		# print(feed)
 		if rss_link == 'http://www.aljazeera.net/aljazeerarss/9ff80bf7-97cf-47f2-8578-5a9df7842311/497f8f74-88e0-480d-b5d9-5bfae29c9a63':
 			print(feed)
 		content_source = ContentSource.objects.get_or_create(link = rss_link)[0]
@@ -49,13 +52,16 @@ def populate_content_sources():
 		elif 'CNN' in content_source.description:
 			content_source.logo_title = feed['channel']['description']
 			content_source.logo_link = 'https://i.cdn.turner.com/dr/cnnarabic/cnnarabic/release/sites/all/themes/cnnarabic/zurb-foundation/images/navbar/logo.png'
+		elif 'SWI' in content_source.description:
+			content_source.logo_title = feed['channel']['description']
+			content_source.logo_image = 'logo_images/-swi-swissinfoch.jpg'
 		elif "BBC" in content_source.description:
 			content_source.logo_title = feed['channel']['description']
 			content_source.logo_link = 'https://www.broadbandtvnews.com/wp-content/uploads/2017/10/BBC-arabic.png'
 		# elif "Alhurra" in content_source.description:
 		# 	content_source.logo_title = feed['channel']['description']
 		# 	content_source.logo_link = 'https://thesinosaudiblog.files.wordpress.com/2009/12/al-hurra.jpg'
-		elif "راديو سوا" in content_source.description:
+		elif "راديو سوا" in content_source.title:
 			content_source.logo_title = feed['channel']['description']
 			content_source.logo_image = "logo_images/sawa.png"
 			
@@ -78,7 +84,8 @@ def populate_articles():
 	categories = ['أخبار_العالم','علوم_و_تكنولوجيا', 'أخبار_العالم', 
 	'علوم_و_تكنولوجيا', 'صحه', 'ترند', 'سياحه_و_سفر', 'ثقافه_و_فن', 
 	'أخبار_العالم','علوم_و_تكنولوجيا', 'أخبار_العالم','أخبار_العالم', 'أخبار_العالم', 
-	'رياضه', 'منوعات', 'أخبار_العالم', 'أخبار_العالم', 'أخبار_العالم' , 'أخبار_العالم']
+	'رياضه', 'منوعات', 'أخبار_العالم', 'أخبار_العالم', 'أخبار_العالم' , 'أخبار_العالم','علوم_و_تكنولوجيا','ثقافه_و_فن','أخبار_العالم']
+
 	for i in range(len(rss_links)):
 		rss_link = rss_links[i]
 		content_source = content_sources[i]
@@ -86,13 +93,19 @@ def populate_articles():
 		
 
 		for entry in feed.entries:
+			# print(str(entry))
 			article = Article.objects.get_or_create(title=entry['title'])[0]
 
 			article.category = categories[i]
 			article.description = entry['title']
 			article.article_link = entry['link']
 			article.content_source = content_source
-			pub_date = dateutil.parser.parse(entry['published'])
+			try:
+				pub_date = dateutil.parser.parse(entry['published'])
+			except Exception as e:
+				pub_date = datetime.now();
+				print(str(e))
+			
 			article.pub_date = pub_date
 			article.thumbnail_desc = entry['title']
 

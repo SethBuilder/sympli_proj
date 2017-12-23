@@ -46,9 +46,9 @@
 
 	  <div class="article infinite-item">
 	  	<a href="{{article.content_source.link}}" title="{{article.content_source.title}}">
-        {% if article.content_source.id == 9 %}
+        {% if article.content_source.id == 20 or article.content_source.id == 21 or article.content_source.id == 22 %}
 
-        <amp-img src="{{article.content_source.logo_image.url}} " alt="{{article.content_source.description}}" class="art_logo" width="115" height="70" layout="fixed"></amp-img>
+        <amp-img src="{{article.content_source.logo_image.url}} " alt="{{article.content_source.description}}" class="art_logo" width="250" height="50" layout="fixed"></amp-img>
 
         {% elif article.content_source.id == 1 or article.content_source.id == 2 or article.content_source.id == 5 %}
         <amp-img src="{{article.content_source.logo_image.url}} " alt="{{article.content_source.description}}" class="art_logo" width="115" height="70" layout="fixed"></amp-img>
