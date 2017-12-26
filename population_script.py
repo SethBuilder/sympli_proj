@@ -9,6 +9,7 @@ import feedparser
 from sympli.models import ContentSource, Article
 import dateutil.parser
 from datetime import date, datetime
+import pytz
 
 def pull_xml(rss_link):
 	news_feed = feedparser.parse(rss_link)
@@ -25,6 +26,7 @@ def content_sources():
 	'https://www.alhurra.com/api/zv$qteotot','https://www.alhurra.com/api/ztyqyeiqot', 
 	'https://www.alhurra.com/api/zgyqqe_qoo','https://www.swissinfo.ch/service/ara/rssxml/sci-tech/rss',
 	'https://www.swissinfo.ch/service/ara/rssxml/culture/rss', 'https://www.swissinfo.ch/service/ara/rssxml/business/rss',
+	'https://www.swissinfo.ch/service/ara/rssxml/society/rss'
 	]
 	return rss_links
 
@@ -84,7 +86,8 @@ def populate_articles():
 	categories = ['أخبار_العالم','علوم_و_تكنولوجيا', 'أخبار_العالم', 
 	'علوم_و_تكنولوجيا', 'صحه', 'ترند', 'سياحه_و_سفر', 'ثقافه_و_فن', 
 	'أخبار_العالم','علوم_و_تكنولوجيا', 'أخبار_العالم','أخبار_العالم', 'أخبار_العالم', 
-	'رياضه', 'منوعات', 'أخبار_العالم', 'أخبار_العالم', 'أخبار_العالم' , 'أخبار_العالم','علوم_و_تكنولوجيا','ثقافه_و_فن','أخبار_العالم']
+	'رياضه', 'منوعات', 'أخبار_العالم', 'أخبار_العالم', 'أخبار_العالم' , 'أخبار_العالم'
+	,'علوم_و_تكنولوجيا','ثقافه_و_فن','أخبار_العالم', 'منوعات']
 
 	for i in range(len(rss_links)):
 		rss_link = rss_links[i]
@@ -93,7 +96,7 @@ def populate_articles():
 		
 
 		for entry in feed.entries:
-			# print(str(entry))
+			print(str(entry['published']))
 			article = Article.objects.get_or_create(title=entry['title'])[0]
 
 			article.category = categories[i]
@@ -101,10 +104,13 @@ def populate_articles():
 			article.article_link = entry['link']
 			article.content_source = content_source
 			try:
-				pub_date = dateutil.parser.parse(entry['published'])
+				pub_date = str(dateutil.parser.parse(entry['published'], fuzzy = True))
+				print('This is what they want! ' + str(pub_date))
 			except Exception as e:
-				pub_date = datetime.now();
-				print(str(e))
+				print("This is DATE " + str(pub_date))
+				pub_date = str(pub_date)
+				print("This is new DATE " + pub_date)
+				print("DATE ERROR" + str(e))
 			
 			article.pub_date = pub_date
 			article.thumbnail_desc = entry['title']

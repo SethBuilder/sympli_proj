@@ -13,10 +13,10 @@ def context_generator(request, title, category):
 		articles_list = Article.objects.filter(category=category).order_by('-pub_date')
 
 	page = request.GET.get('page', 1)
-	paginator = Paginator(articles_list, 18)
+	paginator = Paginator(articles_list, 33)
 
 	try:
-		sleep(0)
+		# sleep(5)
 		articles = paginator.page(page)
 	except PageNotAnInteger:
 		articles = paginator.page(1)
