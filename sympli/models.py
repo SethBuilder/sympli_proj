@@ -109,16 +109,16 @@ class Article(models.Model):
 		
 		if not self.thumbnail_image and self.thumbnail_link:
 			# pdb.set_trace()
-			if str(detect(self.thumbnail_desc)) == 'ar':
-				desc_for_slug = self.thumbnail_desc.split()[:5]
-				desc_for_slug = ('-').join(desc_for_slug)
+			# if str(detect(self.thumbnail_desc)) == 'ar':
+			# 	desc_for_slug = self.thumbnail_desc.split()[:5]
+			# 	desc_for_slug = ('-').join(desc_for_slug)
 
-				self.thumbnail_desc_slug = slugify_arabic(desc_for_slug)
+			# 	self.thumbnail_desc_slug = slugify_arabic(desc_for_slug)
 
-			else:
-				desc_for_slug = self.thumbnail_desc.split()[:5]
-				desc_for_slug = (' ').join(desc_for_slug)
-				self.thumbnail_desc_slug = slugify(desc_for_slug)
+			# else:
+			desc_for_slug = self.thumbnail_desc.split()[:5]
+			desc_for_slug = (' ').join(desc_for_slug)
+			self.thumbnail_desc_slug = slugify(desc_for_slug)
 
 			file_name = self.thumbnail_desc_slug +'.jpg'
 

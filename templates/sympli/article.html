@@ -21,10 +21,10 @@
     <!-- Bootstrap -->
     <!-- <link href="{%static 'css/bootstrap.min.css'%}" rel="stylesheet"> -->
     <!-- <link href="{%static 'css/base_style.css'%}" rel="stylesheet"> -->
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
 
-    <meta name="description" content="{{article.title}} | ؛علامهساثي خى {{article.pub_date}}">
+    <meta name="description" content="{{article.title}} | {{article.pub_date}}">
     <meta name="keywords" content="{{article.title}} | {{article.pub_date}}">
     <meta name="author" content="Seif Elmughrabi">
 
@@ -130,7 +130,7 @@ body{
 }
 
 a:hover {
-    color: #ef4e74;
+    color: #ff0000;
     text-decoration: none;
 }
 
@@ -153,7 +153,7 @@ a{
 }
 
 .active a{
-  color: #ef4e74;
+  color: #ff0000;
 }
 
 .active{
@@ -165,18 +165,18 @@ a{
 .logo_link{
   line-height: 1;
   display: inline;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 100px;
 }
 
 #logo_sympli{
-  color: #63b8ff;
+  color: #000654;
   opacity: .8;
   margin:0px;
   padding: 0px;
 }
 #logo_me{
-  color: #ef4e74;
+  color: #ff0000;
   margin:0px;
   padding: 0px;
 }
@@ -350,7 +350,7 @@ ul.fas{
 }
 
 #body_panel .article p, a{
-  direction: rtl;
+  direction: ltr;
 }
 
 .loader{
@@ -404,7 +404,7 @@ svg rect{
 }
 
  #body_panel h1{
-  text-align: center;
+  text-align: left;
 }
 
 
@@ -493,7 +493,7 @@ top: 18%;
 ul.breadcrumb {
     padding: 10px 16px;
     list-style: none;
-    text-align: right;
+    text-align: left;
 }
 
 /* Display list items side by side */
@@ -517,7 +517,7 @@ ul.breadcrumb li a {
 
 /* Add a color on mouse-over */
 ul.breadcrumb li a:hover {
-    color: #01447e;
+    color: #ff0000;
     text-decoration: underline;
 }
 
@@ -530,10 +530,9 @@ ul.breadcrumb li a:hover {
     <div class="container" id="header_panel">
       <div class="row">
       <div class="text-center">
-      <a href=" {% url 'sympli:index' %} " title="Sympli | أخباري ببساطه">
+      <a href=" {% url 'sympli:index' %} " title="Sympli | News">
         <h1>
-          <span class="logo_link" id="logo_sympli">أخباري</span>
-          <span class="logo_link" id="logo_me">ببساطه</span>
+          <span class="logo_link" id="logo_sympli">Symp</span><span class="logo_link" id="logo_me">li</span>
         </h1>
         <!-- <h1 class="logo_link" id="logo_me">
           .ببساطه
@@ -556,6 +555,42 @@ ul.breadcrumb li a:hover {
         
           <ul class="nav-list">
 
+            <li id="index">
+              <a title="Home" href=" {% url 'sympli:index' %} ">Home</a>
+            </li>
+
+            <li id="world">
+              <a title="World" href=" {% url 'sympli:world' %} ">World</a>
+            </li>
+
+            <li id="world">
+              <a title="US" href=" {% url 'sympli:us' %} ">U.S.</a>
+            </li>
+
+            <li id="tech">
+              <a title="Tech" href=" {% url 'sympli:tech' %} ">Tech</a>
+            </li>
+
+            <li id="health">
+              <a title="Health" href="{% url 'sympli:health' %}">Health</a>
+            </li>
+
+            <li id="sport">
+              <a title="Sport" href="{% url 'sympli:sport' %}">Sport</a>
+            </li>
+
+            <li id="travel">
+              <a title="Travel" href="{% url 'sympli:travel' %}">Travel</a>
+            </li>
+
+
+
+
+
+
+
+
+
             <!-- <li id="register">
               <a href="#">سجّل</a>
             </li> -->
@@ -564,41 +599,29 @@ ul.breadcrumb li a:hover {
               <a href="#">فيديو</a>
             </li> -->
 
-            <li id="trending">
-              <a title="ترند" href="{% url 'sympli:trending' %}">ترند</a>
-            </li>
+            <!-- <li id="trending">
+              <a title="Trending" href="{% url 'sympli:trending' %}">Trending</a>
+            </li> -->
 
             <li id="variety">
-              <a title="منوعات" href="{% url 'sympli:variety' %}">منوعات</a>
+              <a title="Variety" href="{% url 'sympli:variety' %}">Variety</a>
             </li>
 
             <li id="culture">
-              <a title="ثقافه و فن" href="{% url 'sympli:culture' %}">ثقافه و فن</a>
+              <a title="Culture" href="{% url 'sympli:culture' %}">Culture</a>
             </li>
 
-            <li id="travel">
-              <a title="سياحه و سفر" href="{% url 'sympli:travel' %}">سياحه و سفر</a>
-            </li>
+            
 
-            <li id="sport">
-              <a title="رياضه" href="{% url 'sympli:sport' %}">رياضه</a>
-            </li>
+            
 
-            <li id="health">
-              <a title="صحّة" href="{% url 'sympli:health' %}">صحّة</a>
-            </li>
+            
 
-            <li id="science_and_tech">
-              <a title="علوم و تكنولوجيا" href=" {% url 'sympli:science_and_tech' %} ">علوم و تكنولوجيا</a>
-            </li>
+            
 
-            <li id="worldnews">
-              <a title="أخبار العالم" href=" {% url 'sympli:world_news' %} ">أخبار العالم</a>
-            </li>
+            
 
-            <li id="index">
-              <a title="الصفحه الاولى" href=" {% url 'sympli:index' %} ">الصفحه الاولى</a>
-            </li>
+            
 
           </ul>
         </div>
@@ -609,9 +632,10 @@ ul.breadcrumb li a:hover {
     <div id="body_panel">
       <div class="row">
       <ul class="breadcrumb nav-list">
-         <li>{{article.title}}</li>
+        <li><a href="/">Home</a></li>
         <li>(<a href="/{{article.category}}">{{article.content_source.title}}</a>) <a href="/{{category}}">{{category}}</a></li>
-        <li><a href="/">الصفحه الاولى</a></li>
+        <li>{{article.title}}</li>
+        
        
       </ul>
 

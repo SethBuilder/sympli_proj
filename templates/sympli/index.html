@@ -2,12 +2,12 @@
 {% load staticfiles %}
 
 {% block canonical_block %}
-  <link rel="canonical" href="{{ request.get_full_path }}">
+  <!-- <link rel="canonical" href="{{ request.get_full_path }}"> -->
 {% endblock %}
 
 {% block title_block %}
   
-  {{title}}
+  Sympli | {{title}}
 
 {% endblock %}
 
@@ -30,7 +30,9 @@
 {% block body_block %}
 <div class="row">
       <ul class="breadcrumb nav-list">
-        {% if title == "أخباري ببساطه"%}
+        <li><a href="/">Home</a></li>
+
+        {% if title == "Sympli Me"%}
          <li></li>
 
         {% else %}
@@ -38,7 +40,7 @@
 
         {% endif %}
         <!-- <li><a href="/{{article.category}}">{{article.content_source.title}}</a></li> -->
-        <li><a href="/">الصفحه الاولى</a></li>
+        
       </ul>
       </div>
  <div class="container infinite-container">
@@ -46,34 +48,27 @@
 
 	  <div class="article infinite-item">
 	  	<a href="{{article.content_source.link}}" title="{{article.content_source.title}}">
-        {% if article.content_source.id == 20 or article.content_source.id == 21 or article.content_source.id == 22 or article.content_source.id == 23 %}
-
-        <amp-img src="{{article.content_source.logo_image.url}} " alt="{{article.content_source.description}}" class="art_logo" width="90" height="70" layout="fixed"></amp-img>
-
-        {% elif article.content_source.id == 1 or article.content_source.id == 2 or article.content_source.id == 5 %}
+       
         <amp-img src="{{article.content_source.logo_image.url}} " alt="{{article.content_source.description}}" class="art_logo" width="115" height="70" layout="fixed"></amp-img>
-
-
-        {%else%}
-        <amp-img src="{{article.content_source.logo_image.url}} " alt="{{article.content_source.description}}" class="art_logo" width="115" height="70" layout="fixed"></amp-img>
-
-        {%endif%}
       </a>
 
-	  	<p>من {{article.content_source.title}}</p>
+	  	
 	  	
 	  	<div class="thumbnail_container">
+        <p style="text-align: right;">From {{article.content_source.title}}</p>
         <!--This is because alarabya and others does not allow to pu their content in iframe-->
-        {% if article.content_source.id == 9 or article.content_source.id == 5 or article.content_source.id == 7 or article.content_source.id == 1 or article.content_source.id == 8  %}
-        <a target="_blank" href="{{article.article_link}} " title="{{article.title}} - سوف يفتح المقال في مبوبه جديده">
+        {% if article.content_source.id == 15 or article.content_source.id == 16 or article.content_source.id == 17 or article.content_source.id == 18 or article.content_source.id == 19 or article.content_source.id == 20  %}
+        <a target="_blank" href="{{article.article_link}} " title="{{article.title}} - This article will open in a new tab.">
           {% else %}
 
 	  	  <a title="{{article.title}}" href="{% url 'sympli:show_article' article.category article.id %} ">
 
           {% endif %}
+
         <amp-img src=" {{article.thumbnail_image.url}} " alt="Article Thumbnail" class="art_img thumbnail_image" width="373" height="214"  layout="responsive"></amp-img>
 
       </a>
+
 
 	  	<!-- <div class="middle container">
 	  	<div class="row">
@@ -96,8 +91,8 @@
 	  	<div class="pub_date" class="title" >
 	  		<p class="pub_date"> {{article.pub_date}} </p>
         <!-- To avoid putting alarabiya in iFrame as they don't allow it -->
-        {% if article.content_source.id == 9 or article.content_source.id == 5 or article.content_source.id == 7 or article.content_source.id == 1 or article.content_source.id == 8 %}
-        <a title="{{article.title}} - سوف يفتح المقال في مبوبه جديده" href="{{article.article_link}}" target="_blank"> 
+        {% if article.content_source.id == 15 or article.content_source.id == 16 or article.content_source.id == 17 or article.content_source.id == 18 or article.content_source.id == 19 or article.content_source.id == 20 %}
+        <a title="{{article.title}} - This article will open in a new tab." href="{{article.article_link}}" target="_blank"> 
           {{article.title}}<amp-img src=" {% static 'images/new.svg' %} " alt="This article will open in new tab" width="15" height="15"  layout="fixed" class="new"></amp-img>
         </a>
 	  		
@@ -126,7 +121,8 @@
   {% endif %}
 </div>
 
-  <div class="loader loader--style1" title="0">
+  <div class="loader loader--style1" title="Loading">
+    <p style="text-align: center;font-weight: lighter;font-size: 20px;">Loading Awesome Content...</p>
   <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
    width="100px" height="100px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
   <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
