@@ -14,6 +14,9 @@ import os
 # SECURE_SSL_REDIRECT = True
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# SECURE_SSL_REDIRECT = True
+
+
 
 #Variables that contains the location to the templates, static files and media files directories
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -27,7 +30,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'j%dl@hp3bagit#ssaef4shi!e1)v5u(h@sf5&4#%^52_+#om$f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sympli.pythonanywhere.com', '127.0.0.1', 'localhost']
 

@@ -8,7 +8,7 @@ django.setup()
 import feedparser
 from sympli.models import ContentSource, Article
 import dateutil.parser
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import pytz
 
 def pull_xml(rss_link):
@@ -147,6 +147,10 @@ def populate_articles():
 			article.save()
 			
 
+def delete_old_articles():
+	old_articles = Article.objects.filter(pub_delta=datetime.now()-timedelta(days=3))
+	old_articles.delete()
+
 def delete_bad_articles():# articles that don't have links and other important details
 	bad_articles = Article.objects.filter(article_link='')
 	for bad_article in bad_articles:
@@ -158,4 +162,4 @@ if __name__ == '__main__':
 	print('starting population_script.py')
 	populate_articles()
 	delete_bad_articles()
-	
+	delete_old_articles()
