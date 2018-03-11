@@ -30,9 +30,9 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'j%dl@hp3bagit#ssaef4shi!e1)v5u(h@sf5&4#%^52_+#om$f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['sympli.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['www.sympli.news', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [

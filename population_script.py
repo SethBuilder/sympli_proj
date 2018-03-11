@@ -4,7 +4,7 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sympli_proj.settings')
 import django
 django.setup()
-
+from django.utils import timezone
 import feedparser
 from sympli.models import ContentSource, Article
 import dateutil.parser
@@ -19,21 +19,25 @@ def content_sources():
 	rss_links = ['http://feeds.bbci.co.uk/news/world/rss.xml?edition=uk',
 	'http://feeds.bbci.co.uk/news/technology/rss.xml?edition=uk',
 	'http://feeds.bbci.co.uk/news/health/rss.xml?edition=uk',
-	'http://abcnews.go.com/abcnews/usheadlines','http://abcnews.go.com/abcnews/healthheadlines',
-	'http://abcnews.go.com/abcnews/travelheadlines','http://abcnews.go.com/abcnews/sportsheadlines'
-	,'http://abcnews.go.com/abcnews/technologyheadlines','http://abcnews.go.com/abcnews/politicsheadlines',
-	'http://abcnews.go.com/abcnews/gmaheadlines','http://abcnews.go.com/abcnews/nightlineheadlines',
-	'http://abcnews.go.com/abcnews/2020headlines','http://abcnews.go.com/abcnews/thisweekheadlines',
-	'http://abcnews.go.com/abcnews/primetimeheadlines','http://rss.cnn.com/rss/edition_travel.rss',
-	'http://rss.cnn.com/rss/edition_entertainment.rss',
-	'http://rss.cnn.com/rss/edition_us.rss',
-	'http://rss.cnn.com/rss/edition_technology.rss',
-	'http://rss.cnn.com/rss/edition_football.rss','http://rss.cnn.com/rss/edition.rss',
-	'https://www.newyorker.com/feed/culture','https://www.newyorker.com/feed/tech',
-	'https://www.newyorker.com/feed/news/sporting-scene','https://www.newyorker.com/feed/news']
+	'http://abcnews.go.com/abcnews/usheadlines',
+	'http://abcnews.go.com/abcnews/healthheadlines',
+	'http://abcnews.go.com/abcnews/travelheadlines',
+	'http://abcnews.go.com/abcnews/sportsheadlines'
+	,'http://abcnews.go.com/abcnews/technologyheadlines',
+	'http://abcnews.go.com/abcnews/politicsheadlines',
+	'http://abcnews.go.com/abcnews/gmaheadlines',
+	'http://abcnews.go.com/abcnews/nightlineheadlines',
+	'http://abcnews.go.com/abcnews/2020headlines',
+	'http://abcnews.go.com/abcnews/thisweekheadlines',
+	'http://abcnews.go.com/abcnews/primetimeheadlines',
+	'https://www.newyorker.com/feed/culture',
+	'https://www.newyorker.com/feed/tech',
+	'https://www.newyorker.com/feed/news/sporting-scene',
+	'https://www.newyorker.com/feed/news']
 	return rss_links
 
 #GLOBAL VARIABLE
+
 rss_links = content_sources()
 
 def populate_content_sources():
@@ -43,8 +47,6 @@ def populate_content_sources():
 	for rss_link in rss_links:
 		feed = pull_xml(rss_link)
 		print(feed)
-		if rss_link == 'http://www.aljazeera.net/aljazeerarss/9ff80bf7-97cf-47f2-8578-5a9df7842311/497f8f74-88e0-480d-b5d9-5bfae29c9a63':
-			print(feed)
 		content_source = ContentSource.objects.get_or_create(link = rss_link)[0]
 		
 		content_source.title = feed['channel']['title']
@@ -87,12 +89,12 @@ def populate_content_sources():
 
 	return content_sources
 
-#GLOBAL VARIABLE
+# GLOBAL VARIABLE
 content_sources = populate_content_sources()
 
 def populate_articles():
 	categories = ['world','tech', 'health', 'us', 'health', 'travel','sport','tech','us','us',
-	'us','us','us','us','travel', 'variety','us', 'tech','sport','world','culture','tech',
+	'us','us','us','us','travel','culture','tech',
 	'sport','us']
 
 	for i in range(len(rss_links)):
@@ -144,12 +146,16 @@ def populate_articles():
 				print("XXXXXXXXXXXXXXXXXXXXXXXXXXXX" + str(entry))
 				continue
 
-			article.save()
+			if article.pub_date is not None:
+				article.save()
 			
 
 def delete_old_articles():
-	old_articles = Article.objects.filter(pub_delta=datetime.now()-timedelta(days=3))
-	old_articles.delete()
+	time_benchmark = timezone.now()-timedelta(days=6)
+	old_articles = Article.objects.all()
+	for art in old_articles:
+		if art.pub_date <= time_benchmark:
+			art.delete()
 
 def delete_bad_articles():# articles that don't have links and other important details
 	bad_articles = Article.objects.filter(article_link='')
@@ -161,5 +167,5 @@ def delete_bad_articles():# articles that don't have links and other important d
 if __name__ == '__main__':
 	print('starting population_script.py')
 	populate_articles()
-	delete_bad_articles()
+	# delete_bad_articles()
 	delete_old_articles()

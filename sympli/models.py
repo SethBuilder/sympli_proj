@@ -9,6 +9,7 @@ from django.template.defaultfilters import slugify
 import requests
 from time import sleep
 from langdetect import detect
+from datetime import timedelta
 from urllib.parse import urlsplit, urlunsplit
 
 def slugify_arabic(str):
@@ -97,7 +98,7 @@ class Article(models.Model):
 	thumbnail_image = models.ImageField(blank=True, upload_to='article_thumbnails', max_length=5000)
 	thumbnail_desc_slug = models.SlugField(default='test-slug-ar', allow_unicode=True, max_length=600)
 	content_source = models.ForeignKey(ContentSource, default=1)
-	pub_date = models.DateTimeField(blank=True, null=True)
+	pub_date = models.DateTimeField(blank=True, null=True, default=timezone.now()-timedelta(days=4))
 	category = models.CharField(blank=True, max_length=100)
 	# likes = models.ManyToManyField(Like, default=0)
 
@@ -138,7 +139,7 @@ class Article(models.Model):
 			#delete local files as they're already uploaded to media root
 			if os.path.isfile(self.thumbnail_desc_slug+'.jpg'):
 				os.remove(self.thumbnail_desc_slug+'.jpg')
-				print("removed: " + self.thumbnail_desc_slug+'.jpg')
+				# print("removed: " + self.thumbnail_desc_slug+'.jpg')
 
 		super(Article, self).save(*args, **kwargs)
 

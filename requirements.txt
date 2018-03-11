@@ -4,6 +4,7 @@ cffi==1.5.2
 chardet==3.0.4
 Django==1.11.2
 django-appconf==1.0.1
+django-cleanup==2.1.0
 django-crispy-forms==1.6.0
 django-mailer==1.1
 django-messages==0.5.1
@@ -25,5 +26,6 @@ requests==2.18.1
 six==1.10.0
 tqdm==4.7.2
 urllib3==1.21.1
+virtualenv==15.1.0
 virtualenv-clone==0.2.6
 virtualenvwrapper-win==1.2.1
